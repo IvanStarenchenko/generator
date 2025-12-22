@@ -1,0 +1,76 @@
+@import 'tailwindcss';
+
+:root {
+	--background: #ffffff;
+	--foreground: #171717;
+}
+
+:root {
+	--color-background: var(--background);
+	--color-foreground: var(--foreground);
+	--font-sans: var(--font-geist-sans);
+	--font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--background: #0a0a0a;
+		--foreground: #ededed;
+	}
+}
+
+body {
+	background: var(--background);
+	color: var(--foreground);
+	font-family: Arial, Helvetica, sans-serif;
+}
+button {
+	cursor: pointer;
+}
+
+.gradient-logo {
+	@apply bg-gradient-to-r
+  from-blue-500
+  via-indigo-500
+  to-purple-500
+  w-9.25
+  h-9.25
+  rounded-[30%];
+}
+.btn-primary {
+	@apply bg-gradient-to-r
+    from-blue-500
+    via-indigo-500
+    to-purple-500
+    text-white
+    px-6
+    py-3
+    rounded-full
+    font-bold
+    shadow-md
+    transition
+    hover:opacity-90
+    hover:shadow-lg;
+}
+
+.btn-secondary {
+	@apply inline-flex items-center gap-2
+  px-4 py-2 rounded-full
+  bg-gradient-to-r from-[#F2E8FF] to-[#EDE9FE]
+  text-[#7C3AED]
+  border border-[#E9D5FF];
+}
+.text-gradient {
+	@apply bg-gradient-to-r
+    from-blue-500
+    via-indigo-500
+    to-purple-500
+    bg-clip-text
+    text-transparent;
+}
+.input {
+	@apply h-[48px] px-4 rounded-xl border border-[#E5E7EB]
+  bg-white text-sm cursor-pointer
+  focus:outline-none focus:ring-2 focus:ring-purple-400
+  transition;
+}
