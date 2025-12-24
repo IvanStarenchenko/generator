@@ -1,6 +1,7 @@
 'use client'
 import { generateIdeasAction } from '@/app/actions/generate-ideas.action'
 import { IdeaResponse } from '@/lib/ai/idea-generator.service'
+import { Loader } from '@/ui/loader'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -35,7 +36,11 @@ export type TCreatingForm = z.infer<typeof schema>
 export function CreatingForm() {
 	const [ideas, setIdeas] = useState<IdeaResponse | null>(null)
 
-	const { register, handleSubmit } = useForm<TCreatingForm>({
+	const {
+		register,
+		handleSubmit,
+		formState: { isSubmitting },
+	} = useForm<TCreatingForm>({
 		resolver: zodResolver(schema),
 		defaultValues: {
 			holidayType: 'Christmas',
@@ -47,7 +52,6 @@ export function CreatingForm() {
 	const onSubmit = async (data: TCreatingForm) => {
 		const result = await generateIdeasAction(data)
 		setIdeas(result)
-		console.log('Generated Ideas:', result)
 	}
 
 	return (
@@ -119,6 +123,7 @@ export function CreatingForm() {
 
 					<button
 						type='submit'
+						disabled={isSubmitting}
 						className='
             mt-4 h-13
             rounded-full
@@ -133,6 +138,7 @@ export function CreatingForm() {
 					</button>
 				</form>
 			</div>
+			{isSubmitting && <Loader />}
 			{ideas && <Response ideas={ideas} />}
 		</div>
 	)
