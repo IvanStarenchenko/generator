@@ -52,6 +52,7 @@ export function CreatingForm() {
 	const onSubmit = async (data: TCreatingForm) => {
 		const result = await generateIdeasAction(data)
 		setIdeas(result)
+		console.log(result)
 	}
 
 	return (
@@ -136,10 +137,10 @@ export function CreatingForm() {
 					>
 						<GiStarsStack /> Generate Ideas
 					</button>
+					{isSubmitting && <Loader />}
+					{ideas && <Response ideas={ideas} />}
 				</form>
 			</div>
-			{isSubmitting && <Loader />}
-			{ideas && <Response ideas={ideas} />}
 		</div>
 	)
 }

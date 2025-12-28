@@ -15,6 +15,7 @@ export const IdeaResponseSchema = z.object({
 		z.object({
 			title: z.string(),
 			description: z.string(),
+			source: z.string().url().nullable(),
 		})
 	),
 })
@@ -26,25 +27,32 @@ export async function generateIdeas(
 	const { holidayType, category, budget, numOfIdeas } = params
 
 	const prompt = `
-You are an assistant that generates holiday ideas.
+		You are an assistant that generates holiday ideas.
 
-Return ONLY valid JSON.
-Do NOT include explanations, markdown or comments.
-Do NOT wrap the response in backticks.
+		Return ONLY valid JSON.
+		Do NOT include explanations, markdown, comments or backticks.
 
-JSON format:
-{
-  "title": string,
-  "ideas": {
-    "title": string,
-    "description": string
-  }[]
-}
+		VERY IMPORTANT RULES:
+		- Provide a source link ONLY if you are confident the page exists.
+		- If you are not sure the exact page exists, set "source" to null.
+		- Do NOT invent or guess URLs.
+		- Prefer well-known, authoritative domains only:
+			wikipedia.org, official tourism websites, national parks, tripadvisor.com, booking.com.
 
-Holiday: ${holidayType}
-Category: ${category}
-Number of ideas: ${numOfIdeas}
-Budget: ${budget ?? 'Any'}
+		JSON format:
+		{
+			"title": string,
+			"ideas": {
+				"title": string,
+				"description": string,
+				"source": string | null
+			}[]
+		}
+
+		Holiday: ${holidayType}
+		Category: ${category}
+		Number of ideas: ${numOfIdeas}
+		Budget: ${budget ?? 'Any'}
 `
 
 	const response = await groq.chat.completions.create({

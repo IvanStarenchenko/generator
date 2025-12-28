@@ -1,4 +1,5 @@
 import { IdeaResponse } from '@/lib/ai/idea-generator.service'
+import Link from 'next/link'
 
 interface Props {
 	ideas: IdeaResponse
@@ -45,29 +46,38 @@ export function Response({ ideas }: Props) {
 								<p className='text-gray-500 leading-relaxed text-[15px] mb-8 flex-grow'>
 									{idea.description}
 								</p>
-
-								<div className='pt-6 border-t border-gray-50 flex items-center text-violet-600 font-semibold text-[15px] cursor-pointer group/link'>
-									Learn more
-									<svg
-										className='w-4 h-4 ml-2 transition-transform group-hover/link:translate-x-1'
-										fill='none'
-										stroke='currentColor'
-										viewBox='0 0 24 24'
+								{idea.source && (
+									<Link
+										href={`https://${idea.source}`}
+										target='_blank'
+										rel='noopener noreferrer'
+										className='pt-6 border-t border-gray-50 flex items-center text-violet-600 font-semibold text-[15px] cursor-pointer group/link'
 									>
-										<path
-											strokeLinecap='round'
-											strokeLinejoin='round'
-											strokeWidth='2'
-											d='M9 5l7 7-7 7'
-										/>
-									</svg>
-								</div>
+										Learn more
+										<svg
+											className='w-4 h-4 ml-2 transition-transform group-hover/link:translate-x-1'
+											fill='none'
+											stroke='currentColor'
+											viewBox='0 0 24 24'
+										>
+											<path
+												strokeLinecap='round'
+												strokeLinejoin='round'
+												strokeWidth='2'
+												d='M9 5l7 7-7 7'
+											/>
+										</svg>
+									</Link>
+								)}
 							</div>
 						))}
 					</div>
 
 					<div className='mt-16 flex justify-center'>
-						<button className='px-8 py-4 bg-white border-2 border-violet-100 text-violet-600 font-bold rounded-full hover:bg-violet-50 transition-colors shadow-sm'>
+						<button
+							className='px-8 py-4 bg-white border-2 border-violet-100 text-violet-600 font-bold rounded-full hover:bg-violet-50 transition-colors shadow-sm'
+							type='submit'
+						>
 							Generate More Ideas
 						</button>
 					</div>
